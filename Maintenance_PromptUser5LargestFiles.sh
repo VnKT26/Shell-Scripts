@@ -1,19 +1,15 @@
 #!/bin/sh
+
 #############################################################################
 #############################################################################
 #Author: Ventura Torres
 #Date Created: 04/26/18
-#Revised for Mojave: 10/10/2018
+#Revised for Mojave: 10/10/2018 #no longer supported
+#Revised to work with 11.5.x - 11.x 09-08-2021
 #############################################################################
 #############################################################################
-#
 ##Check what OS is running. Command to find free disk space in bytes varies depending on the mac OS version. 
-osMinor=$( /usr/bin/sw_vers -productVersion | awk -F. {'print $2'} )
-if [[ $osMinor == 12 ]]; then
-    freeSpace=$( /usr/sbin/diskutil info / | grep "Available Space" | awk '{print $6}' | cut -c 2- )
-else
-    freeSpace=$( /usr/sbin/diskutil info / | grep "Free Space" | awk '{print $6}' | cut -c 2- )
-fi
+freeSpace=$( /usr/sbin/diskutil info / | grep "Free Space" | awk '{print $6}' | cut -c 2- )
 
 #Convert bytes into GB
 GBS=$(echo "$freeSpace" | awk '{ byte =$1 /1024/1024**2 ; print byte " GB" }'| awk '{printf("%.2f\n", $1)}')
